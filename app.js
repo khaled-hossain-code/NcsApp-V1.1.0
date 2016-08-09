@@ -1,12 +1,23 @@
+//****Start of App.js****\\
 var express = require('express');
+var mongoose = require('mongoose');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+//mongodb connection
+var db = mongoose.connect('mongodb://localhost/ncsV1');
+
+//Routes
+var home = require('./routes/index');
+var callListRoutes = require('./routes/callListRoutes'); 				
+var deviceListRoutes = require('./routes/deviceListRoutes');        
+var callHistoryRoutes = require('./routes/callHistoryRoutes');     
+
+//Api Routes
+var devicesApi = require('./routes/devicesApi');
 
 var app = express();
 
@@ -22,8 +33,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+//URI of different routes
+app.use('/', home);
+app.use('/calls', callListRoutes); 			
+app.use('/devices', deviceListRoutes);    
+app.use('/callhistory', callHistoryRoutes);
+
+//URI of diffrent API routes
+app.use('/apiv1/devices', devicesApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
