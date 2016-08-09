@@ -17,7 +17,8 @@ var deviceListRoutes = require('./routes/deviceListRoutes');
 var callHistoryRoutes = require('./routes/callHistoryRoutes');     
 
 //Api Routes
-var devicesApi = require('./routes/devicesApi');
+var devicesApi = require('./API/devicesApi');
+var callsApi = require('./API/callsApi');
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use('/callhistory', callHistoryRoutes);
 
 //URI of diffrent API routes
 app.use('/apiv1/devices', devicesApi);
+app.use('/apiv1/calls', callsApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
