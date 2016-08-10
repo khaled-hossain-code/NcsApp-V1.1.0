@@ -1,18 +1,19 @@
 var express = require('express');
-var router = express.Router();
+var callsApiRouter = express.Router();
 var callListCtrl = require('../controllers/callListCtrl');
 
-/* GET /devices */
-router.get('/', function(req, res, next) {
-  deviceListCtrl.getAllDevice(req, res,function(err, devices){
-    if(err){
-      res.send({'Error':err});
-    }else if(devices){
-      res.send(devices);
-    }else{
-      res.send({});
-    }
-  });
-});
+//http://192.168.1.6:8080/apiv1/calls/ 
+callsApiRouter.route('/')
+    .get( function(req, res, next) {
+        callListCtrl.getAllCalls(req, res, function(err, callList) {
+            if (err) {
+                res.send({ 'Error': err });
+            } else if (callList) {
+                res.send(callList);
+            } else {
+                res.send({});
+            }
+        });
+    });
 
-module.exports = router;
+module.exports = callsApiRouter;

@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //URI of different routes
 app.use('/', home);
-app.use('/calls', callListRoutes); 			
+app.use('/currentcalls', callListRoutes); 			
 app.use('/devices', deviceListRoutes);    
 app.use('/callhistory', callHistoryRoutes);
 

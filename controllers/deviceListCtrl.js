@@ -2,12 +2,20 @@ var deviceListModel = require('../models/deviceListModel');
 var _ = require('underscore');
 
 
-exports.getAllDevice = function(req, res, cb){
+exports.getAllDevices = function (req, res, cb) {
   var query = _.pick(req.query, 'IP', 'Floor', 'RoomType', 'RoomNumber', 'BedNumber');
 
-  deviceListModel.getAllDevice(query,function(err, deviceList){
+  query = _.mapObject(query, function (val, key) {
+    try {
+      val = JSON.parse(val); //if the value is not JSON it returns error
+    } catch (e) { }
 
-      cb(err, deviceList);
+    return val;
+  });
 
-    });
+  deviceListModel.getAllDevices(query, function (err, deviceList) {
+
+    cb(err, deviceList);
+
+  });
 }
