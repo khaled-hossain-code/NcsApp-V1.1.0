@@ -2,7 +2,7 @@ var express = require('express');
 var callListRouter = express.Router();
 var callListCtrl = require('../controllers/callListCtrl');
 
-/* //http://192.168.1.6:8080/currentcalls/ */
+/* //http://192.168.1.6:8080/calls/ */
 callListRouter.route('/')
   .get(function(req, res, next) {
     callListCtrl.getCurrentCalls(req, res,function(err, calls){
