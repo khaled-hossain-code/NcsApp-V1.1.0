@@ -15,5 +15,8 @@
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "tsd": "^0.6.5"
   }
 }

@@ -5,11 +5,11 @@ var callListCtrl = require('../controllers/callListCtrl');
 /* //http://192.168.1.6:8080/calls/ */
 callListRouter.route('/')
   .get(function(req, res, next) {
-    callListCtrl.getCurrentCalls(req, res,function(err, calls){
+    callListCtrl.getCurrentCalldetails(req, res,function(err, callList){
       if(err){
         res.status(500).send(err);
-      }else if(calls){
-        res.status(200).send(calls);
+      }else if(callList){
+        res.status(200).send(callList);
         //res.render('callListView',{title: 'calls List'});
       }else{
         res.status(404).send("Not Found");

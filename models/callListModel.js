@@ -8,3 +8,11 @@ exports.getAllCalls = function (query, cb) {
   });
 
 }
+
+exports.getCurrentCalls = function (req, res, cb){
+  
+  callSchema.find({"StopTime": ""}, function(err, callList) {
+      cb(err, callList);
+    });
+};
+

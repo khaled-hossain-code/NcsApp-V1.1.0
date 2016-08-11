@@ -19,3 +19,10 @@ exports.getAllDevices = function (req, res, cb) {
 
   });
 }
+
+exports.getDeviceByIP = function(IP, cb){
+
+    deviceListModel.getDeviceByIP(IP,function(err, device){
+        cb(err, device);
+    });
+  }
