@@ -18,11 +18,19 @@ exports.getAllDevices = function (req, res, cb) {
     cb(err, deviceList);
 
   });
-}
+};
 
 exports.getDeviceByIP = function(IP, cb){
 
     deviceListModel.getDeviceByIP(IP,function(err, device){
         cb(err, device);
     });
-  }
+};
+
+exports.updateDeviceSocketId = function (payload, cb){
+    
+    deviceListModel.updateDeviceSocketId(payload, function(err, updatedDevice){
+        cb(err, updatedDevice);
+    });
+}
+

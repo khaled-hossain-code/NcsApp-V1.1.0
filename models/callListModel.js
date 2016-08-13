@@ -16,3 +16,13 @@ exports.getCurrentCalls = function (req, res, cb){
     });
 };
 
+exports.getCallStatus = function(deviceIP, cb){
+
+  callSchema.
+    find({"IP":deviceIP}).
+    sort({updatedAt:1}).
+    exec(function (err, deviceList) {
+      cb(err, deviceList);
+    });
+};
+

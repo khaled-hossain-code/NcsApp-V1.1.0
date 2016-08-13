@@ -25,4 +25,10 @@ exports.getDeviceListByIP = function(IPList, cb){
   });
 };
 
+exports.updateDeviceSocketId = function(payload,cb){
+  deviceSchema.findOneAndUpdate({IP: payload.IP}, {$set: {"SocketID" : payload.SocketID}}, function (err, updatedDevice) {
+    cb(err, updatedDevice);
+  });
+};
+
 

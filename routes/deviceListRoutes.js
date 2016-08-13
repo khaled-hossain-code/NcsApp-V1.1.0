@@ -9,8 +9,8 @@ deviceListRouter.route('/')
       if(err){
         res.status(500).send(err);
       }else if(deviceList){
-        res.status(200).send(deviceList);
-        //res.render('deviceListView',{title: 'Device List'});
+        //res.status(200).send(deviceList);
+        res.render('deviceListView',{ data: deviceList });
       }else{
         res.status(404).send("Not Found");
       }

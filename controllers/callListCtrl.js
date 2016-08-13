@@ -17,11 +17,42 @@ exports.getAllCalls = function (req, res, cb) {
     });
 };
 
-//asynchronous method
 exports.getCurrentCalls = function (req, res, cb) {
     
     callListModel.getCurrentCalls(req, res,function(err, callList){
         cb(err, callList);
+    });
+};
+
+exports.getCallStatus = function(deviceIP, cb ){
+    callListModel.getCallStatus(deviceIP, function(err, deviceList){
+        //device list is sorted in decending order means last call is in 0th place
+        var device = deviceList[0];
+        var status = 10; //10 means status is unknown
+
+        if (err) {
+            //device status is unknown giving error from database
+          console.log(err);
+        } else if (_.isEmpty(deviceList)) {
+            //device is not in call list means this device is brand new and
+            //did not generated any calls yet
+        } else {
+            if(device.CallType === 'Normal' && device.StopTime !== "" ){
+                status = 0; //nurse pressed presence button
+            }else if(device.CallType === 'Normal' && device.StopTime === "" ){
+                status =1; //only patient generated normal call
+            }else if(device.CallType === 'Emergency' && device.StopTime !== "" ){
+                status = 4; // nurse cancelled emergency
+            }else if(device.CallType === 'Emergency' && device.StopTime === "" ){
+                status =2; //nurse generated emergency call
+            }else if(device.CallType === 'BlueCode' && device.StopTime !== "" ){
+                status = 5; //nurse cancelled bluecode
+            }else if(device.CallType === 'BlueCode' && device.StopTime === "" ){
+                status =3; //nurse generated bluecode
+            }
+        }
+
+        cb(err, status);
     });
 };
 
