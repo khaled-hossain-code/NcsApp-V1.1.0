@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
+var timestamps = require('mongoose-timestamp');
 var RoomTypes = 'Single VIP DoubleShare MaleWard FemaleWard ICU CCU MICU Dialysis '.split(' ');
 
 var deviceSchema= new Schema({
@@ -33,14 +33,8 @@ var deviceSchema= new Schema({
   },
   SocketID:{
     type:String
-  },
-  createdOn:{
-    type:String
-  },
-  updatedOn:{
-    type:String
-    }
+  }
 });
-
+deviceSchema.plugin(timestamps);
 //Export model
 module.exports = mongoose.model('device',deviceSchema);

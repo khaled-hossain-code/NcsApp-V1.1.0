@@ -31,4 +31,12 @@ exports.updateDeviceSocketId = function(payload,cb){
   });
 };
 
+exports.createDevice = function(deviceData, cb){
+  var deviceObj = new deviceSchema(deviceData);
+
+  deviceObj.save(function (err, result) {
+          cb(err,result);
+      });
+}
+
 

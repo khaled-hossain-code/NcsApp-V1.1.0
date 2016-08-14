@@ -30,7 +30,26 @@ exports.getDeviceByIP = function(IP, cb){
 exports.updateDeviceSocketId = function (payload, cb){
     
     deviceListModel.updateDeviceSocketId(payload, function(err, updatedDevice){
-        cb(err, updatedDevice);
+        
+        if(err){
+          //unable to update device info
+        }else if(_.isEmpty(updatedDevice)){
+          //means there is no device list found, so create one
+          var deviceData =  {
+                  IP: payload.IP,
+                  Floor: '',        
+                  RoomType: '',
+                  RoomNumber: '',
+                  BedNumber: '',
+                  Status: 1,
+                  SocketID: payload.SocketID         
+              };
+          deviceListModel.createDevice(deviceData, function(err, device){
+              console.log(device);
+              cb(err, updatedDevice);
+          });
+        }
+        
     });
 }
 

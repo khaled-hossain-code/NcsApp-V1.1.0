@@ -97,6 +97,9 @@ exports.getCurrentCalldetails = function(req, res, cb){
     });
 }
 
+exports.createCallsBBB = function( payload, cb){
+    
+}
 
 function filterQuery(req){
     'use strict';

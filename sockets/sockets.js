@@ -36,8 +36,27 @@ module.exports.listen = function(server){
         }
       });
     });
-  });
 
+socket.on('Normal', function (payload, cb) {
+    //console.log(payload);
+    cb('confirmed Normal Call'); //cb means call back. this data is sent back to beaglebone
+    
+    //callsController.createcallsBBB(payload);// creates a row in calls table in database
+
+    callListCtrl.createCallsBBB(payload, function(err,result){
+
+      //console.log('reply: '+result);
+      if(result == 1){
+        io.emit('Refresh Device Table', result);
+      }
+      
+    });
+});
+
+
+
+
+    });
     //socket io connection of /users url
     // users = io.of('/users')
     // users.on('connection', function(socket){

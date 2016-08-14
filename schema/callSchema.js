@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var timestamps = require('mongoose-timestamp');
 var CallTypes = 'Normal Emergency BlueCode Toilet '.split(' ');
 
 var CallSchema = mongoose.Schema({
@@ -30,5 +31,5 @@ var CallSchema = mongoose.Schema({
   }
 });
 
-
+CallSchema.plugin(timestamps);
 module.exports = mongoose.model('Call', CallSchema);
