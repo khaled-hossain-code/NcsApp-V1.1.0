@@ -32,6 +32,7 @@ exports.updateDeviceSocketId = function (payload, cb){
     deviceListModel.updateDeviceSocketId(payload, function(err, updatedDevice){
         
         if(err){
+          console.log("deviceListCtrl: " + err);
           //unable to update device info
         }else if(_.isEmpty(updatedDevice)){
           //means there is no device list found, so create one
@@ -44,12 +45,24 @@ exports.updateDeviceSocketId = function (payload, cb){
                   Status: 1,
                   SocketID: payload.SocketID         
               };
+              
           deviceListModel.createDevice(deviceData, function(err, device){
-              console.log(device);
-              cb(err, updatedDevice);
+              
+              if(err){
+                console.log("deviceListCtrl: " + err);                
+              }
+              else if(_.isEmpty(device)){
+                console.log("No device is created");
+              }else{
+                //1 means creating the device is successfull
+                cb(err, device);
+              }
+              
           });
         }
         
     });
-}
+};
+
+
 

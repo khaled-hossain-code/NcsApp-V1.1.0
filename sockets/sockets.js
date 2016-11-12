@@ -9,31 +9,24 @@ module.exports.listen = function(server){
 
     //socket io code test purpose
     io.on('connection', function (socket) {
-    //console.log("User Connected");
+    //the server emits to device is connected with its socket id
     socket.emit('connected', { status: 'connected with Server', socketId: socket.id });
 
-
-
+    //device replies with attaching socket id in its payload
     socket.on('payload', function(payload){
 
       console.log("IP: "+payload.IP+" (socket id: "+payload.SocketID+") Connected");
 
+      //after getting payload need to update the payload in device table
       deviceListCtrl.updateDeviceSocketId(payload, function(err, updatedDevice){
-        
-        if (err) {
-          // disconnect the device so that when it reconnects it gets its updated SocketID
-          console.log(err);
-          
-
-        } else if (_.isEmpty(updatedDevice)) {
-          // tell front-end a IP is calling but not available in database send();
-          //console.log(device);
-        } else {
-          //means device exists in database so device status needs to be transmitted to BBB
+      
+      
+          //device is created in server or already exists (socketid updated) 
+          //now need to get the call status of the device from calls table 
           callListCtrl.getCallStatus(updatedDevice.IP, function(err, deviceStatus){
              socket.emit('deviceStatus', {'deviceStatus' : deviceStatus});
           });
-        }
+        });
       });
     });
 
@@ -41,12 +34,10 @@ socket.on('Normal', function (payload, cb) {
     //console.log(payload);
     cb('confirmed Normal Call'); //cb means call back. this data is sent back to beaglebone
     
-    //callsController.createcallsBBB(payload);// creates a row in calls table in database
-
     callListCtrl.createCallsBBB(payload, function(err,result){
 
       //console.log('reply: '+result);
-      if(result == 1){
+      if(result === 1){
         io.emit('Refresh Device Table', result);
       }
       
